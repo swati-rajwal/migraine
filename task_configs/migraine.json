@@ -1,0 +1,9 @@
+{
+"classes": [-1, 0, 1],
+"nfold": [1, 2, 3, 4, 5],
+"metric": "cls_specific_class",
+"pos_label": "-1",
+"model": "rb",
+"pred_file": "preds.csv",
+"proj": "migraine_sentiment/basic"
+}
