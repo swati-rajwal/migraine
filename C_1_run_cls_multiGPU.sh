@@ -17,7 +17,7 @@ model_type='roberta'
 model_name='roberta-base'
 alias='rb'
 
-proj=migraine_sentiment/basic
+proj=migraine_sentiment
 
 for k in 1 2 3 4 5
 do
