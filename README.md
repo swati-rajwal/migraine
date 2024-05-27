@@ -22,10 +22,7 @@ $ pip install -r installations/requirements.txt
 ## 🏃Running the Classification Code
 1. Clone the repositry: ```git clone https://github.com/swati-rajwal/migraine.git```
 2. Get access to dataset, not publicly shared at the moment. Alternatively, you can use this pipeline to your own dataset as well. Put the dataset in ```data``` folder
-3. Create dataset splits: 
-```python 
-python B_nfold_split.py <csv_file_path> <output_folder_path>
-```
+3. Create dataset splits: ```python B_nfold_split.py <csv_file_path> <output_folder_path>```
 4. Run ```chmod +x C_1_run_cls_multiGPU.sh``` to ensure you have rights to run this file.
 5. Run ```C_1_run_cls_multiGPU.sh``` that in turn runs the ```C_2_simpletransformers_cls.py``` file for RoBERTa based classification
 6. As an example, you can run a command like ```./C_1_run_cls_multiGPU.sh &> results/roberta_run_$(date +%Y-%m-%d).log```
