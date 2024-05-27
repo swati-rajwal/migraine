@@ -1,5 +1,27 @@
 # Project Migraine: Part 2
-![Example Image](figures/sentiment_distribution.png)
+![Example Image](figures/sentiment_across_groups.png)
+
+## 💊Migraine Medications Considered
+### Commonly Used Migraine Preventive Medications, Generic (US Brand Name)
+
+| Medication Group             | Medications                                                                                                      |
+|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| Topiramate (Topamax)         | Topiramate (Topamax)                                                                                             |
+| Propranolol (Inderal)        | Propranolol (Inderal)                                                                                            |
+| Amitriptyline (Elavil)    | Amitriptyline (Elavil)                                                                                           |
+| OnabotulinumtoxinA (Botox)   | OnabotulinumtoxinA (Botox)                                                                                       |
+| CGRP monoclonal antibodies   | erenumab (Aimovig), galcanezumab (Emgality), fremanezumab (Ajovy), eptinezumab (Vyepti)                          |
+| Gepants                      | Atogepant (Qulipta), rimegepant (Nurtec)                                                                         |
+
+### Commonly Used Migraine Acute Medications
+
+| Medication Group | Medications                                                                                                                    |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| Triptans         | Sumatriptan (Imitrex), Rizatriptan (Maxalt), Eletriptan (Relpax), Naratriptan (Amerge), Frovatriptan (Frova), Zolmitriptan (Zomig), Almotriptan (Axert) |
+| Gepants          | ubrogepant (Ubrelvy), rimegepant (Nurtec), zavegepant (Zavzpret)                                                              |
+| Ditan            | Lasmiditan (Reyvow)                                                                                                            |
+| Ergots           | Dihydroergotamine (DHE, Migranal, Trudhesa), ergotamine (Cafergot)                                                             |
+
 
 ## 🎯Tested Environment
 The project has been tested on the following configurations:
@@ -29,3 +51,4 @@ $ pip install -r installations/requirements.txt
 7. If you re-run step 4, make sure to either delete or rename the folder 'model'
 8. For evaluation, run ```python D_eval_model.py task_configs/migraine.json &> results/eval_run_$(date +%Y-%m-%d).log``` command.
 9. To understand the sentiment across various medication groups, run ```python E_sentiment_analysis.py```
+

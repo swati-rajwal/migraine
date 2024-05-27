@@ -1,19 +1,3 @@
-'''
-### A.   Commonly used migraine preventive medications, generic (US brand name): 
-•        Topiramate (Topamax)
-•        Propranolol (Inderal)
-•        Amitriptyline (Elavil)
-•        OnabotulinumtoxinA (Botox)
-•        CGRP monoclonal antibodies: combine the 4- erenumab (Aimovig), galcanezumab (Emgality), fremanezumab (Ajovy), eptinezumab (Vyepti)
-•        Gepants: Atogepant (Qulipta),  rimegepant (Nurtec),
-(A thought, since the number of Botox mentioned is so high, perhaps some include migraine users talking about Botox for non-migraine indication, such as cosmetics..etc, this would be a limitation)
-
-### B.   Commonly used migraine acute medications: 
-• Triptans: Sumatriptan (Imitrex), Rizatriptan (Maxalt), Eletriptan (Relpax), Naratriptan (Amerge), Frovatriptan (Frova), Zolmitriptan (Zomig), Almotriptan (Axert), 
-• Gepants: ubrogepant (Ubrelvy), rimegepant (Nurtec), zavegepant (Zavzpret)
-• Ditan: lasmiditan (Reyvow)
-• [Not sure if we included this category the first round] Ergots: Dihydroergotamine (DHE, Migranal, Trudhesa), ergotamine (Cafergot)
-'''
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 analyzer = SentimentIntensityAnalyzer()
@@ -35,11 +19,15 @@ plt.tight_layout()
 plt.grid()
 plt.savefig('figures/lengths.png')
 
-medication_keywords = ['Topiramate','Topamax','Propranolol','Inderal', 'Atenolol','tenormin', 'Metoprolol','Toprol','Amitriptyline','Elavil','Nortriptyline', 'Pamelor','OnabotulinumtoxinA','Botox','erenumab','Aimovig', 'galcanezumab','Emgality', 'fremanezumab','Ajovy','eptinezumab','Vyepti','Atogepant','Qulipta', 'ubrogepant','Ubrelvy', 'rimegepant','Nurtec',
-'Sumatriptan','Imitrex', 'Rizatriptan','Maxalt', 'Eletriptan','Relpax', 'Naratriptan','Amerge', 'Frovatriptan','Frova', 'Zolmitriptan','Zomig', 'Almotriptan','Axert',
-'Lasmiditan','Reyvow','Dihydroergotamine','DHE','Migranal', 'ergotamine',]
+medication_keywords = ['Topiramate', 'Topamax', 'Propranolol', 'Inderal', 'Amitriptyline', 'Elavil', 'OnabotulinumtoxinA', 'Botox', 
+                       'CGRP monoclonal antibodies', 'erenumab', 'Aimovig', 'galcanezumab', 'Emgality', 'fremanezumab', 'Ajovy', 
+                       'eptinezumab', 'Vyepti', 'Gepants', 'Atogepant', 'Qulipta', 'rimegepant', 'Nurtec', 'Triptans', 'Sumatriptan', 
+                       'Imitrex', 'Rizatriptan', 'Maxalt', 'Eletriptan', 'Relpax', 'Naratriptan', 'Amerge', 'Frovatriptan', 'Frova', 
+                       'Zolmitriptan', 'Zomig', 'Almotriptan', 'Axert', 'ubrogepant', 'Ubrelvy', 'zavegepant', 'Zavzpret', 'Ditan',
+                       'lasmiditan', 'Reyvow', 'Ergots', 'Dihydroergotamine', 'DHE', 'Migranal', 'Trudhesa', 'ergotamine','Cafergot']
 
 medication_keywords = [x.lower() for x in medication_keywords]
+print(f"total medication keywords: {len(medication_keywords)} and unique are: {len(set(medication_keywords))}")
 
 sentences = df['text']
 sentiment=[]
