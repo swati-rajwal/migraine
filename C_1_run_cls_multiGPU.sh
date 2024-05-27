@@ -26,7 +26,9 @@ do
 
 	if [ ! -d ${out_dir} ];
 	then
+		echo "Directory does not exist. Creating now for k= $k" 
 		mkdir -p ${out_dir}
+		echo "*******Running Python command for k=$k with data_dir=${data_dir} and out_dir=${out_dir}****"
 		python C_2_simpletransformers_cls.py \
 			--data_dir ${data_dir} \
 			--out_dir ${out_dir} \

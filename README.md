@@ -21,6 +21,7 @@ python B_nfold_split.py <csv_file_path> <output_folder_path>
 ```
 4. Run ```chmod +x C_1_run_cls_multiGPU.sh``` to ensure you have rights to run this file.
 5. Run ```C_1_run_cls_multiGPU.sh``` that in turn runs the ```C_2_simpletransformers_cls.py``` file for RoBERTa based classification
+6. As an example, you can run a command like ```./C_1_run_cls_multiGPU.sh &> results/roberta_run_$(date +%Y-%m-%d).log```
 6. If you re-run step 4, make sure to either delete or rename the folder 'model'
 7. For evaluation, run ```python D_eval_model.py task_configs/migraine.json``` command.
 8. To understand the sentiment across various medication groups, run ```python E_sentiment_analysis.py```

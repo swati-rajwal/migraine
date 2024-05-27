@@ -10,6 +10,8 @@ import argparse
 import ast
 import numpy as np
 import pandas as pd 
+# import torch
+# torch.cuda.empty_cache()
 
 parser = argparse.ArgumentParser(description='Process model parameters')
 
@@ -45,9 +47,9 @@ pred_out_file = f'{out_dir}/preds.csv'
 
 #classes= ast.literal_eval(args.classes)  #['NotFontan', 'Fontan']
 classes = get_classes(args.data_dir)
-print(f"Number of classes: {classes}",flush=True)
+# print(f"Number of classes: {classes}",flush=True)
 num_label = len(classes)
-print(f"Value of num_label: {num_label}",flush=True)
+# print(f"Value of num_label: {num_label}",flush=True)
 
 # load data
 df_train = load_data(f'{data_dir}/train.csv', is_train=True, classes=classes)
@@ -146,4 +148,3 @@ if args.do_predict_prob:
             'probas':strfmt_prob(pred_probs)
         })
     df.to_csv(pred_out_file, index=False, sep='\t')
-
