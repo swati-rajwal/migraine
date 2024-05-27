@@ -1,22 +1,18 @@
 '''
 ### A.   Commonly used migraine preventive medications, generic (US brand name): 
-
 •        Topiramate (Topamax)
 •        Propranolol (Inderal)
 •        Amitriptyline (Elavil)
 •        OnabotulinumtoxinA (Botox)
 •        CGRP monoclonal antibodies: combine the 4- erenumab (Aimovig), galcanezumab (Emgality), fremanezumab (Ajovy), eptinezumab (Vyepti)
 •        Gepants: Atogepant (Qulipta),  rimegepant (Nurtec),
- 
 (A thought, since the number of Botox mentioned is so high, perhaps some include migraine users talking about Botox for non-migraine indication, such as cosmetics..etc, this would be a limitation)
 
 ### B.   Commonly used migraine acute medications: 
- 
 • Triptans: Sumatriptan (Imitrex), Rizatriptan (Maxalt), Eletriptan (Relpax), Naratriptan (Amerge), Frovatriptan (Frova), Zolmitriptan (Zomig), Almotriptan (Axert), 
 • Gepants: ubrogepant (Ubrelvy), rimegepant (Nurtec), zavegepant (Zavzpret)
 • Ditan: lasmiditan (Reyvow)
 • [Not sure if we included this category the first round] Ergots: Dihydroergotamine (DHE, Migranal, Trudhesa), ergotamine (Cafergot)
-
 '''
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
@@ -25,7 +21,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-df = pd.read_csv('/labs/sarkerlab/srajwal/Migraine_project/migraine/data/combined_dataset.csv')
+df = pd.read_csv('data/B_processed_dataset/combined_dataset.csv')
 
 lengths1 = df['text'].str.len()
 plt.figure(figsize=(10, 6))  # Adjust the size of your plot
@@ -60,7 +56,6 @@ Brand_name_Dict = dict((k.lower(), v.lower()) for k, v in Brand_name_Dict.items(
 Med_Group_Dict = {'Topiramate':'Topiramate (Topamax)','Topamax':'Topiramate (Topamax)','Propranolol':'Beta Blockers','Inderal':'Beta Blockers','tenormin':'Beta Blockers','Toprol':'Beta Blockers','Atenolol':'Beta Blockers','Metoprolol':'Beta Blockers','Amitriptyline':'Tricyclic antidepressants','Elavil':'Tricyclic antidepressants','Nortriptyline':'Tricyclic antidepressants','Pamelor':'Tricyclic antidepressants','OnabotulinumtoxinA':'OnabotulinumtoxinA (Botox)','Botox':'OnabotulinumtoxinA (Botox)','erenumab':'CGRP monoclonal antibodies','Aimovig':'CGRP monoclonal antibodies','galcanezumab':'CGRP monoclonal antibodies','Emgality':'CGRP monoclonal antibodies','fremanezumab':'CGRP monoclonal antibodies','Ajovy':'CGRP monoclonal antibodies','eptinezumab':'CGRP monoclonal antibodies','Vyepti':'CGRP monoclonal antibodies','Atogepant':'Gepants','Qulipta':'Gepants','Ubrelvy':'Gepants','Nurtec':'Gepants','ubrogepant':'Gepants','rimegepant':'Gepants','Imitrex':'Triptans','Maxalt':'Triptans','Relpax':'Triptans','Amerge':'Triptans','Frova':'Triptans','Zomig':'Triptans','Axert':'Triptans','Sumatriptan':'Triptans','Rizatriptan':'Triptans','Eletriptan':'Triptans','Naratriptan':'Triptans','Frovatriptan':'Triptans','Zolmitriptan':'Triptans','Almotriptan':'Triptans','Reyvow':'Lasmiditan (Reyvow)','Lasmiditan':'Lasmiditan (Reyvow)','Dihydroergotamine':' Dihydroergotamine (DHE)','ergotamine':'Dihydroergotamine (DHE)'}
 Med_Group_Dict = dict((k.lower(), v.lower()) for k, v in Med_Group_Dict.items())   # Converting to lower letter for easy comparision
 
-
 df['medication_matched'] = ''
 df['brand_name'] = ''
 df['med_group'] = ''
@@ -73,9 +68,7 @@ senti_score_dict = dict((k.lower(), v) for k, v in senti_score_dict.items())   #
 frequency_dict = {'Topiramate (Topamax)':0, 'Beta Blockers':0, 'Tricyclic antidepressants':0, 'OnabotulinumtoxinA (Botox)':0, 'CGRP monoclonal antibodies':0, 'Gepants':0, 'Triptans':0, 'Lasmiditan (Reyvow)':0, 'Dihydroergotamine (DHE)':0}
 frequency_dict = dict((k.lower(), v) for k, v in frequency_dict.items())   # Converting to lower letter for easy comparision
 
-# for i in range(len(df)):
 for i, row in df.iterrows():
-
   curr_sentence = row['text'].lower().split()   # Convert str into list of words
   matches = list(set(curr_sentence).intersection(set(medication_keywords)))
   
@@ -98,11 +91,9 @@ for i, row in df.iterrows():
     df.at[i,'brand_name'] = list(set(brand_name))
     df.at[i,'med_group'] = list(set(group_name))
 
-
 df.to_csv('results/sentiment_results.csv', index=False)
 
 statistic_values = pd.DataFrame(columns=['group_name','frequency','mean','median','Standard_deviation'])
-
 statistic_values['group_name'] = frequency_dict.keys()
 statistic_values['sentiment_scores'] = list(senti_score_dict.values())
 statistic_values['frequency'] = frequency_dict.values()
@@ -119,48 +110,35 @@ for i in range(len(senti_scores)):
 statistic_values['mean'] = mean_list
 statistic_values['median'] = median_list
 statistic_values['Standard_deviation'] = sd_list
-statistic_values.fillna(0)
-
-def proc(df, min_count):
-    name2count = {}
-    for name in df['generic_name']:
-        if name not in name2count:
-            name2count[name] = 0
-        name2count[name] += 1
-
-    sorted_count = sorted(name2count.items(), key=lambda x:x[1], reverse=True)
-    res = []
-    for name, count in sorted_count:
-        median_score = df[df['generic_name'] == name]['sentiment_score'].median()
-        std_score = df[df['generic_name'] == name]['sentiment_score'].std()
-        mean_score = df[df['generic_name'] == name]['sentiment_score'].mean()
-        print(f'{name}\t{count}\t{median_score:.2f}\t{std_score:.2f}\t{mean_score:.2f}')
-
-        if count >= min_count:
-            res.append(name)
-    return res
-
+# statistic_values.fillna(0)
+# print(statistic_values)
+statistic_values.to_csv('results/sentiment_statistics.csv',index=False)
 
 plt_1 = plt.figure(figsize=(9, 5))
 
-# importing diamond dataset from the library
-# df = pd.read_csv('/content/new_group_sa_merge_user_output.csv', usecols=['sentiment_score', 'generic_name'])
-
-# selected = proc(df, 40)
 selected = ['Topiramate (Topamax)','Beta Blockers','Tricyclic antidepressants','OnabotulinumtoxinA (Botox)','CGRP monoclonal antibodies','Gepants','Triptans','Lasmiditan (Reyvow)','Dihydroergotamine (DHE)']
 selected = [x.lower() for x in selected]    #All in lower letters
-
-# plotting density plot for carat using distplot()
 for name in selected:
-    # scores = df[df['generic_name'] == name].sentiment_score.values.tolist()
     temp_df = statistic_values[statistic_values['group_name']==name].reset_index(drop=True)
     scores = temp_df['sentiment_scores'][0]
-    # scores = statistic_values[statistic_values['group_name']==name]['sentiment_scores'][0]
-    # sns.distplot(a=scores, hist=True, rug=False, kde=False, label=name)
     sns.kdeplot(scores, label=name, clip=[-1, 1])
-
-# visualizing plot using matplotlib.pyplot library
+plt.title('Kernel Density Estimation of Sentiment Scores across Medication Groups')
 plt.xlabel('Sentiment score')
 plt.legend()
 plt.grid()
 plt.savefig('figures/sentiment_distribution.png')
+
+colors = plt.cm.jet(np.linspace(0, 1, len(statistic_values)))
+plt.figure(figsize=(10, 6))
+for i, row in statistic_values.iterrows():
+    plt.scatter(row['mean'], row['median'], color=colors[i], label=row['group_name'])
+
+plt.title('Sentiment Score Distribution per Medication Group')
+plt.xlabel('Mean Sentiment Score')
+plt.ylabel('Median Sentiment Score')
+plt.grid(True)
+plt.legend(title='Group Names', bbox_to_anchor=(1.05, 1), loc='upper left')
+
+plt.tight_layout()  # Adjusts plot to make room for the legend
+plt.grid(True)
+plt.savefig('figures/mean_median_sentiment_plot.png')
