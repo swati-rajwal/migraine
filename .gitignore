@@ -2,4 +2,7 @@
 *.pickle
 *.xlsx
 conda_envs/
-apex/
+_pycahce_/
+outputs/
+model/
+runs/

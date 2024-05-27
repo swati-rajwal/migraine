@@ -1,3 +1,5 @@
+#chmod +x C_1_run_cls_multiGPU.sh
+
 set -ex
 export CUDA_VISIBLE_DEVICES=0,1
 
@@ -25,7 +27,7 @@ do
 	if [ ! -d ${out_dir} ];
 	then
 		mkdir -p ${out_dir}
-		python simpletransformers_cls.py \
+		python C_2_simpletransformers_cls.py \
 			--data_dir ${data_dir} \
 			--out_dir ${out_dir} \
 			--epoch ${max_epoch} \

@@ -9,7 +9,7 @@ import os
 import argparse
 import ast
 import numpy as np
-import pandas as pd
+import pandas as pd 
 
 parser = argparse.ArgumentParser(description='Process model parameters')
 
@@ -45,8 +45,9 @@ pred_out_file = f'{out_dir}/preds.csv'
 
 #classes= ast.literal_eval(args.classes)  #['NotFontan', 'Fontan']
 classes = get_classes(args.data_dir)
+print(f"Number of classes: {classes}",flush=True)
 num_label = len(classes)
-
+print(f"Value of num_label: {num_label}",flush=True)
 
 # load data
 df_train = load_data(f'{data_dir}/train.csv', is_train=True, classes=classes)
@@ -59,29 +60,22 @@ else:
 
 # model arch
 model_args = ClassificationArgs()
-
 model_args.safe_serialization=False
-
 model_args.sliding_window = args.sliding_window
 model_args.max_seq_length = args.max_seq_length
-
 model_args.train_batch_size = args.train_batch_size
 model_args.eval_batch_size = args.eval_batch_size
 model_args.gradient_accumulation_steps = args.gradient_accumulation_steps
-
 model_args.num_train_epochs = args.epoch
 model_args.n_gpu = args.n_gpu
-
 # input data process
 model_args.reprocess_input_data = True
 model_args.overwrite_output_dir = True
-
 # save checkpoints
 model_args.best_model_dir = f'{out_dir}/best_model'
 model_args.use_early_stopping = True
 model_args.early_stopping_patience = 10
 model_args.evaluate_during_training = True
-
 # other
 model_args.no_cache = True
 
