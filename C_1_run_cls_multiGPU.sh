@@ -1,6 +1,6 @@
 #chmod +x C_1_run_cls_multiGPU.sh
 
-set -ex
+# set -ex
 export CUDA_VISIBLE_DEVICES=0,1
 
 max_epoch="10"
