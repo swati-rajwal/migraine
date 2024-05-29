@@ -1,10 +1,10 @@
 # Project Migraine: Part 2
-![Example Image](figures/sentiment_across_groups.png)
+![Example Image](figures/kde_sentiment_scores.png)
 
 ## 💊Migraine Medications Considered
-### Commonly Used Migraine **Preventive** Medications, Generic (US Brand Name)
+### Commonly Used Migraine **Preventive** Medications
 
-| Medication Group             | Medications                                                                                                      |
+| Medication Group             | Generic Medication (US Brand Name)                                                                                                      |
 |------------------------------|------------------------------------------------------------------------------------------------------------------|
 | Antiseizure medications         | Topiramate (Topamax)                                                                                             |
 | Beta Blockers        | Propranolol (Inderal), Atenolol (Tenormin), Metoprolol (Toprol)                                                                                            |
@@ -13,9 +13,9 @@
 | CGRP monoclonal antibodies   | erenumab (Aimovig), galcanezumab (Emgality), fremanezumab (Ajovy), eptinezumab (Vyepti)                          |
 | Gepants                      | Atogepant (Qulipta), rimegepant (Nurtec)                                                                         |
 
-### Commonly Used Migraine Acute Medications
+### Commonly Used Migraine **Acute** Medications
 
-| Medication Group | Medications                                                                                                                    |
+| Medication Group | Generic Medication (US Brand Name)                                                                                                                    |
 |------------------|--------------------------------------------------------------------------------------------------------------------------------|
 | Triptans         | Sumatriptan (Imitrex), Rizatriptan (Maxalt), Eletriptan (Relpax), Naratriptan (Amerge), Frovatriptan (Frova), Zolmitriptan (Zomig), Almotriptan (Axert) |
 | Gepants          | ubrogepant (Ubrelvy), rimegepant (Nurtec), zavegepant (Zavzpret)                                                              |
