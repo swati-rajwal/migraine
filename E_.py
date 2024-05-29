@@ -9,9 +9,21 @@ nltk.download('punkt')
 from collections import Counter
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import numpy as np
 
 df = pd.read_csv('data/B_processed_dataset/combined_dataset.csv')
+lengths1 = df['text'].str.split().apply(len)
+sns.set_theme(style="whitegrid")
+plt.figure(figsize=(12, 8))
+sns.histplot(lengths1, bins=50, kde=True, color="skyblue", alpha=0.6, edgecolor='black')
+mean_length1 = lengths1.mean()
+plt.axvline(mean_length1, color='red', linestyle='dashed', linewidth=2, label=f'Mean text length: {mean_length1:.2f}')
+plt.xticks(np.arange(0, lengths1.max() + 10, 10))  # Adjust the max value accordingly if necessary
+plt.xlabel('Length of Text (in words)', fontsize=14)
+plt.ylabel('Frequency', fontsize=14)
+plt.legend(fontsize=12)
+plt.tight_layout()
+plt.savefig('figures/tweet_lengths.png', dpi=300)
 
 medication_keywords = [
     'Topiramate', 'Topamax', 'Propranolol', 'Inderal', 'Amitriptyline', 'Elavil',
@@ -23,9 +35,6 @@ medication_keywords = [
     'Ubrelvy', 'zavegepant', 'Zavzpret', 'Ditan', 'lasmiditan', 'Reyvow', 'Ergots',
     'Dihydroergotamine', 'DHE', 'Migranal', 'Trudhesa', 'ergotamine', 'Cafergot'
 ]
-medication_keywords = [x.lower() for x in medication_keywords]
-print(f"total medication keywords: {len(medication_keywords)} and unique are: {len(set(medication_keywords))}")
-
 med_group_mapping = {
     'Topiramate': 'Topiramate (Topamax)', 'Topamax': 'Topiramate (Topamax)',
     'Propranolol': 'Propranolol (Inderal)', 'Inderal': 'Propranolol (Inderal)',
@@ -62,8 +71,10 @@ medication_type_mapping = {
     'Ergots': 'Migraine Acute Medications'
 }
 
-med_group_mapping = dict((k.lower(), v.lower()) for k, v in med_group_mapping.items())   # Converting to lower letter for easy comparision
-medication_type_mapping = dict((k.lower(), v.lower()) for k, v in medication_type_mapping.items())   # Converting to lower letter for easy comparision
+# Lowercase everything!
+medication_keywords = [x.lower() for x in medication_keywords]
+med_group_mapping = dict((k.lower(), v.lower()) for k, v in med_group_mapping.items())
+medication_type_mapping = dict((k.lower(), v.lower()) for k, v in medication_type_mapping.items())
 
 def sentiment_score(text):
     return analyzer.polarity_scores(text)['compound']
@@ -110,14 +121,9 @@ def count_keywords(keyword_column):
 
 # Count the keywords using the function
 keyword_counts = count_keywords(df['matched_keywords'])
-
-# Remove any keys that have zero or no entries (if necessary)
 keyword_counts = {key: val for key, val in keyword_counts.items() if val > 0}
+# print(keyword_counts)
 
-# Check the keyword counts to see the results
-print(keyword_counts)
-
-# Plot the results
 plt.figure(figsize=(12, 8))
 plt.bar(keyword_counts.keys(), keyword_counts.values(), color='blue')
 plt.xlabel('Medication Keywords', fontsize=12)
@@ -125,12 +131,11 @@ plt.ylabel('Frequency', fontsize=12)
 plt.title('Frequency of Each Medication Keyword in Texts', fontsize=16)
 plt.xticks(rotation=90)  # Rotate x-axis labels for better visibility
 plt.tight_layout()  # Automatically adjust subplot parameters to give specified padding
-plt.grid()
-plt.savefig('figures/medication_keywords.png')
-
+plt.grid(True)
+plt.savefig('figures/freq_medication_keywords.png')
 
 med_group = count_keywords(df['med_group'])
-print(med_group)
+# print(med_group)
 
 plt.figure(figsize=(12, 8))
 plt.bar(med_group.keys(), med_group.values(), color='blue')
@@ -139,11 +144,11 @@ plt.ylabel('Frequency', fontsize=12)
 plt.title('Frequency of Each Medication Group in Texts', fontsize=16)
 plt.xticks(rotation=90)  # Rotate x-axis labels for better visibility
 plt.tight_layout()  # Automatically adjust subplot parameters to give specified padding
-plt.grid()
-plt.savefig('figures/medication_groups.png')
+plt.grid(True)
+plt.savefig('figures/freq_medication_groups.png')
 
 group_type = count_keywords(df['prev_acute'])
-print(group_type)
+# print(group_type)
 
 plt.figure(figsize=(12, 8))
 plt.bar(group_type.keys(), group_type.values(), color='blue')
@@ -151,8 +156,8 @@ plt.xlabel('Medication Medication', fontsize=12)
 plt.ylabel('Frequency', fontsize=12)
 plt.title('Preventive v/s Acute Migraine Medications', fontsize=16)
 plt.tight_layout()  # Automatically adjust subplot parameters to give specified padding
-plt.grid()
-plt.savefig('figures/medication_prev_acute.png')
+plt.grid(True)
+plt.savefig('figures/freq_medication_prev_acute.png')
 
 
 # Function to expand the comma-separated entries into individual rows
@@ -176,23 +181,38 @@ df_med_groups = df_med_groups[df_med_groups['med_group'] != '']
 df_prev_acute['prev_acute'] = df_prev_acute['prev_acute'].str.strip()
 df_prev_acute = df_prev_acute[df_prev_acute['prev_acute'] != '']
 
-# Visualization of Sentiment Scores for Matched Keywords
-plt.figure(figsize=(15, 14))
-sns.boxplot(y='matched_keywords', x='sentiment_score', data=df_keywords, orient='h')
-plt.title('Distribution of Sentiment Scores Across Matched Keywords')
-plt.grid()
-plt.savefig('figures/sentiment_across_keywords.png')
+plt.figure(figsize=(18, 14))
+sns.boxplot(y='matched_keywords', x='sentiment_score', data=df_keywords, orient='h', palette='coolwarm')
+plt.title('Sentiment Scores Distribution Across Migraine Medication Keywords', fontsize=16)
+plt.xlabel('Sentiment Score', fontsize=14)
+plt.ylabel('Matched Keywords', fontsize=14)
+plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+plt.savefig('figures/vader_sentiment_across_keywords.png')
+plt.close()
 
-# Visualization of Sentiment Scores for Medication Groups
-plt.figure(figsize=(19, 14))
-sns.boxplot(y='med_group', x='sentiment_score', data=df_med_groups, orient='h')
-plt.title('Distribution of Sentiment Scores Across Medication Groups')
-plt.grid()
-plt.savefig('figures/sentiment_across_groups.png')
+plt.figure(figsize=(21, 14))
+sns.boxplot(y='med_group', x='sentiment_score', data=df_med_groups, orient='h', palette='viridis')
+plt.title('Sentiment Scores Distribution Across Migraine Medication Groups', fontsize=16)
+plt.xlabel('Sentiment Score', fontsize=14)
+plt.ylabel('Medication Groups', fontsize=14)
+plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+plt.savefig('figures/vader_sentiment_across_groups.png')
+plt.close()
 
-# Visualization of Sentiment Scores for Preventive/Acute Categories
-plt.figure(figsize=(22, 7))
-sns.boxplot(y='prev_acute', x='sentiment_score', data=df_prev_acute, orient='h')
-plt.title('Distribution of Sentiment Scores Across Preventive/Acute Categories')
-plt.grid()
-plt.savefig('figures/sentiment_across_categories.png')
+plt.figure(figsize=(24, 7))
+sns.boxplot(y='prev_acute', x='sentiment_score', data=df_prev_acute, orient='h', palette='magma')
+plt.title('Sentiment Scores Distribution Across Preventive/Acute Migraine Medications', fontsize=16)
+plt.xlabel('Sentiment Score', fontsize=14)
+plt.ylabel('Category', fontsize=14)
+plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+plt.savefig('figures/vader_sentiment_across_categories.png')
+plt.close()
+
+# KDE Plot
+plt.figure(figsize=(15, 11))
+sns.kdeplot(data=df_med_groups, x='sentiment_score', hue='med_group', multiple='layer',clip=[-1, 1])
+plt.title('Density Plot of Sentiment Scores by Medication Group')
+plt.xlabel('Sentiment Score')
+plt.ylabel('Density')
+plt.savefig('figures/kde_sentiment_scores.png', dpi=300)
+plt.close()

@@ -2,13 +2,13 @@
 ![Example Image](figures/sentiment_across_groups.png)
 
 ## 💊Migraine Medications Considered
-### Commonly Used Migraine Preventive Medications, Generic (US Brand Name)
+### Commonly Used Migraine **Preventive** Medications, Generic (US Brand Name)
 
 | Medication Group             | Medications                                                                                                      |
 |------------------------------|------------------------------------------------------------------------------------------------------------------|
-| Topiramate (Topamax)         | Topiramate (Topamax)                                                                                             |
-| Propranolol (Inderal)        | Propranolol (Inderal)                                                                                            |
-| Amitriptyline (Elavil)    | Amitriptyline (Elavil)                                                                                           |
+| Antiseizure medications         | Topiramate (Topamax)                                                                                             |
+| Beta Blockers        | Propranolol (Inderal), Atenolol (Tenormin), Metoprolol (Toprol)                                                                                            |
+| Tricyclic antidepressants    | Amitriptyline (Elavil), Nortriptyline (Pamelor)                                                                                           |
 | OnabotulinumtoxinA (Botox)   | OnabotulinumtoxinA (Botox)                                                                                       |
 | CGRP monoclonal antibodies   | erenumab (Aimovig), galcanezumab (Emgality), fremanezumab (Ajovy), eptinezumab (Vyepti)                          |
 | Gepants                      | Atogepant (Qulipta), rimegepant (Nurtec)                                                                         |
