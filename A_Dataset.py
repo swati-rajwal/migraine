@@ -66,6 +66,12 @@ combined_df.sort_values('sort_key', ascending=False, inplace=True)
 combined_df = combined_df.drop_duplicates(subset='new_id', keep='first')
 combined_df.drop(columns='sort_key', inplace=True)
 combined_df.reset_index(drop=True, inplace=True)
+# Remove white space before or after a keyword
+'''
+' amerge' & 'amerge' should be same
+'sumatriptan', 'sumatriptan ' should be same
+'''
+combined_df['keyword'] = combined_df['keyword'].str.strip()
 
 print(f"Shape of combined dataframe: {combined_df.shape}")
 
@@ -75,6 +81,7 @@ print(combined_df.columns)
 
 print(combined_df.shape)
 
+print("Number of unique medication keywords:", len(combined_df['keyword'].unique()))
 print("Unique medication/therapy keywords:", sorted(combined_df['keyword'].unique()))
 
 def plot_graph(colname):
