@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 import os, sys
 
 data = sys.argv[1]
-outdir = sys.argv[2]
+outdir = sys.argv[2]  # for example, you can provide 'data/migraine_sentiment' folder to store all the splits
 N = 5
 
 df = pd.read_csv(data)

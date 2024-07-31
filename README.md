@@ -44,11 +44,11 @@ $ pip install -r installations/requirements.txt
 ## 🏃Running the Classification Code
 1. Clone the repositry: ```git clone https://github.com/swati-rajwal/migraine.git```
 2. Get access to dataset, not publicly shared at the moment. Alternatively, you can use this pipeline to your own dataset as well. Put the dataset in ```data``` folder
-3. Create dataset splits: ```python B_nfold_split.py <csv_file_path> <output_folder_path>```
-4. Run ```chmod +x C_1_run_cls_multiGPU.sh``` to ensure you have rights to run this file.
-5. Run ```C_1_run_cls_multiGPU.sh``` that in turn runs the ```C_2_simpletransformers_cls.py``` file for RoBERTa based classification
-6. As an example, you can run a command like ```./C_1_run_cls_multiGPU.sh &> results/roberta_run_$(date +%Y-%m-%d).log```
-7. If you re-run step 4, make sure to either delete or rename the folder 'model'
-8. For evaluation, run ```python D_eval_model.py task_configs/migraine.json &> results/eval_run_$(date +%Y-%m-%d).log``` command.
-9. To understand the sentiment across various medication groups, run ```python E_sentiment_analysis.py```
-
+3. ```A_Dataset.py``` file is written specifically for the dataset we have. If you have access to our dataset, this file should work. Else, you will have to pr-process your data accordingly.
+4. Create dataset splits: ```python B_nfold_split.py <csv_file_path> <output_folder_path>```
+5. Run ```chmod +x C_1_run_cls_multiGPU.sh``` to ensure you have rights to run this file.
+6. Run ```C_1_run_cls_multiGPU.sh``` that in turn runs the ```C_2_simpletransformers_cls.py``` file for RoBERTa based classification
+7. As an example, you can run a command like ```./C_1_run_cls_multiGPU.sh &> results/roberta_run_$(date +%Y-%m-%d).log```
+8. If you re-run step 4, make sure to either delete or rename the folder 'model'
+9. For evaluation, run ```python D_eval_model.py task_configs/migraine.json &> results/eval_run_$(date +%Y-%m-%d).log``` command.
+10. To understand the sentiment across various medication groups, run ```python E_sentiment_analysis.py```
