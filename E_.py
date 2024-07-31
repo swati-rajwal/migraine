@@ -25,56 +25,145 @@ plt.legend(fontsize=12)
 plt.tight_layout()
 plt.savefig('figures/tweet_lengths.png', dpi=300)
 
-medication_keywords = [
-    'Topiramate', 'Topamax', 'Propranolol', 'Inderal', 'Amitriptyline', 'Elavil',
-    'OnabotulinumtoxinA', 'Botox', 'CGRP monoclonal antibodies', 'erenumab', 'Aimovig',
-    'galcanezumab', 'Emgality', 'fremanezumab', 'Ajovy', 'eptinezumab', 'Vyepti',
-    'Gepants', 'Atogepant', 'Qulipta', 'rimegepant', 'Nurtec', 'Triptans', 'Sumatriptan',
-    'Imitrex', 'Rizatriptan', 'Maxalt', 'Eletriptan', 'Relpax', 'Naratriptan', 'Amerge',
-    'Frovatriptan', 'Frova', 'Zolmitriptan', 'Zomig', 'Almotriptan', 'Axert', 'ubrogepant',
-    'Ubrelvy', 'zavegepant', 'Zavzpret', 'Ditan', 'lasmiditan', 'Reyvow', 'Ergots',
-    'Dihydroergotamine', 'DHE', 'Migranal', 'Trudhesa', 'ergotamine', 'Cafergot'
+# 54 keywords in total
+medication_keywords=[
+'topiramate', 'topamax', 'propranolol', 'inderal', 'atenolol', 'tenormin', 'metoprolol', 'toprol', 
+'amitriptyline', 'elavil', 'nortriptyline', 'pamelor', 'onabotulinumtoxina', 'botox', 'erenumab', 
+'aimovig', 'galcanezumab', 'emgality', 'fremanezumab', 'ajovy', 'eptinezumab', 'vyepti', 'atogepant', 
+'qulipta', 'rimegepant', 'nurtec', 'sumatriptan', 'imitrex', 'rizatriptan', 'maxalt', 'eletriptan', 
+'relpax', 'naratriptan', 'amerge', 'frovatriptan', 'frova', 'zolmitriptan', 'zomig', 'almotriptan', 
+'axert', 'ubrogepant', 'ubrelvy', 'rimegepant', 'nurtec', 'zavegepant', 'zavzpret', 'lasmiditan', 
+'reyvow', 'dihydroergotamine', 'dhe', 'migranal', 'trudhesa', 'ergotamine', 'cafergot'
 ]
+
 med_group_mapping = {
-    'Topiramate': 'Topiramate (Topamax)', 'Topamax': 'Topiramate (Topamax)',
-    'Propranolol': 'Propranolol (Inderal)', 'Inderal': 'Propranolol (Inderal)',
-    'Amitriptyline': 'Tricyclic antidepressants', 'Elavil': 'Tricyclic antidepressants',
-    'OnabotulinumtoxinA': 'OnabotulinumtoxinA (Botox)', 'Botox': 'OnabotulinumtoxinA (Botox)',
-    'erenumab': 'CGRP monoclonal antibodies', 'Aimovig': 'CGRP monoclonal antibodies',
-    'galcanezumab': 'CGRP monoclonal antibodies', 'Emgality': 'CGRP monoclonal antibodies',
-    'fremanezumab': 'CGRP monoclonal antibodies', 'Ajovy': 'CGRP monoclonal antibodies',
-    'eptinezumab': 'CGRP monoclonal antibodies', 'Vyepti': 'CGRP monoclonal antibodies',
-    'Atogepant': 'Gepants', 'Qulipta': 'Gepants', 'rimegepant': 'Gepants', 'Nurtec': 'Gepants',
-    'Sumatriptan': 'Triptans', 'Imitrex': 'Triptans',
-    'Rizatriptan': 'Triptans', 'Maxalt': 'Triptans',
-    'Eletriptan': 'Triptans', 'Relpax': 'Triptans',
-    'Naratriptan': 'Triptans', 'Amerge': 'Triptans',
-    'Frovatriptan': 'Triptans', 'Frova': 'Triptans',
-    'Zolmitriptan': 'Triptans', 'Zomig': 'Triptans',
-    'Almotriptan': 'Triptans', 'Axert': 'Triptans',
-    'ubrogepant': 'Gepants', 'Ubrelvy': 'Gepants',
-    'zavegepant': 'Gepants', 'Zavzpret': 'Gepants',
-    'lasmiditan': 'Ditan', 'Reyvow': 'Ditan',
-    'Dihydroergotamine': 'Ergots', 'DHE': 'Ergots', 'Migranal': 'Ergots', 'Trudhesa': 'Ergots',
-    'ergotamine': 'Ergots', 'Cafergot': 'Ergots'
-}
-medication_type_mapping = {
-    'Topiramate (Topamax)': 'Migraine Preventive Medications',
-    'Propranolol (Inderal)': 'Migraine Preventive Medications',
-    'Tricyclic antidepressants': 'Migraine Preventive Medications',
-    'OnabotulinumtoxinA (Botox)': 'Migraine Preventive Medications',
-    'CGRP monoclonal antibodies': 'Migraine Preventive Medications',
-    'Gepants': 'Migraine Preventive Medications',
-    'Triptans': 'Migraine Acute Medications',
-    'Gepants': 'Migraine Acute Medications',  # Note that Gepants appears in both Preventive and Acute
-    'Ditan': 'Migraine Acute Medications',
-    'Ergots': 'Migraine Acute Medications'
+    'topamax': 'antiseizure medications',
+    'topiramate': 'antiseizure medications',
+    'inderal': 'beta blockers',
+    'propranolol': 'beta blockers',
+    'tenormin': 'beta blockers',
+    'atenolol': 'beta blockers',
+    'toprol': 'beta blockers',
+    'metoprolol': 'beta blockers',
+    'elavil': 'tricyclic antidepressants',
+    'amitriptyline': 'tricyclic antidepressants',
+    'pamelor': 'tricyclic antidepressants',
+    'nortriptyline': 'tricyclic antidepressants',
+    'botox': 'onabotulinumtoxina (botox)',
+    'onabotulinumtoxina': 'onabotulinumtoxina (botox)',
+    'aimovig': 'cgrp monoclonal antibodies',
+    'erenumab': 'cgrp monoclonal antibodies',
+    'emgality': 'cgrp monoclonal antibodies',
+    'galcanezumab': 'cgrp monoclonal antibodies',
+    'ajovy': 'cgrp monoclonal antibodies',
+    'fremanezumab': 'cgrp monoclonal antibodies',
+    'vyepti': 'cgrp monoclonal antibodies',
+    'eptinezumab': 'cgrp monoclonal antibodies',
+    'qulipta': 'gepants',
+    'atogepant': 'gepants',
+    'nurtec': 'gepants',
+    'rimegepant': 'gepants',
+    'imitrex': 'triptans',
+    'sumatriptan': 'triptans',
+    'maxalt': 'triptans',
+    'rizatriptan': 'triptans',
+    'relpax': 'triptans',
+    'eletriptan': 'triptans',
+    'amerge': 'triptans',
+    'naratriptan': 'triptans',
+    'frova': 'triptans',
+    'frovatriptan': 'triptans',
+    'zomig': 'triptans',
+    'zolmitriptan': 'triptans',
+    'axert': 'triptans',
+    'almotriptan': 'triptans',
+    'ubrelvy': 'gepants',
+    'ubrogepant': 'gepants',
+    'zavzpret': 'gepants',
+    'zavegepant': 'gepants',
+    'reyvow': 'ditan',
+    'lasmiditan': 'ditan',
+    'dhe': 'ergots',
+    'dihydroergotamine': 'ergots',
+    'migranal': 'ergots',
+    'trudhesa': 'ergots',
+    'cafergot': 'ergots',
+    'ergotamine': 'ergots'
 }
 
-# Lowercase everything!
-medication_keywords = [x.lower() for x in medication_keywords]
-med_group_mapping = dict((k.lower(), v.lower()) for k, v in med_group_mapping.items())
-medication_type_mapping = dict((k.lower(), v.lower()) for k, v in medication_type_mapping.items())
+
+# medication_type_mapping = {
+#     'antiseizure medications': 'migraine preventive medications',
+#     'beta blockers': 'migraine preventive medications',
+#     'tricyclic antidepressants': 'migraine preventive medications',
+#     'onabotulinumtoxina (botox)': 'migraine preventive medications',
+#     'cgrp monoclonal antibodies': 'migraine preventive medications',
+#     'gepants': 'migraine acute medications',  # Note that Gepants appears in both Preventive and Acute
+#     'triptans': 'migraine acute medications',
+#     'ditan': 'migraine acute medications',
+#     'ergots': 'migraine acute medications'
+# }
+
+medication_type_mapping = {
+    'topiramate': 'migraine preventive medication',
+    'propranolol': 'migraine preventive medication',
+    'atenolol': 'migraine preventive medication',
+    'metoprolol': 'migraine preventive medication',
+    'amitriptyline': 'migraine preventive medication',
+    'nortriptyline': 'migraine preventive medication',
+    'onabotulinumtoxina': 'migraine preventive medication',
+    'erenumab': 'migraine preventive medication',
+    'galcanezumab': 'migraine preventive medication',
+    'fremanezumab': 'migraine preventive medication',
+    'eptinezumab': 'migraine preventive medication',
+    'atogepant': 'migraine preventive medication',
+    'rimegepant': 'migraine preventive medication',
+    'sumatriptan': 'migraine acute medication',
+    'rizatriptan': 'migraine acute medication',
+    'eletriptan': 'migraine acute medication',
+    'naratriptan': 'migraine acute medication',
+    'frovatriptan': 'migraine acute medication',
+    'zolmitriptan': 'migraine acute medication',
+    'almotriptan': 'migraine acute medication',
+    'ubrogepant': 'migraine acute medication',
+    'rimegepant': 'migraine acute medication',
+    'zavegepant': 'migraine acute medication',
+    'lasmiditan': 'migraine acute medication',
+    'dihydroergotamine': 'migraine acute medication',
+    'ergotamine': 'migraine acute medication'
+}
+
+# Dictionary mapping brand names to generic names
+brand_to_generic = {
+    "topamax": "topiramate",
+    "inderal": "propranolol",
+    "tenormin": "atenolol",
+    "toprol": "metoprolol",
+    "elavil": "amitriptyline",
+    "pamelor": "nortriptyline",
+    "botox": "onabotulinumtoxina",
+    "aimovig": "erenumab",
+    "emgality": "galcanezumab",
+    "ajovy": "fremanezumab",
+    "vyepti": "eptinezumab",
+    "qulipta": "atogepant",
+    "nurtec": "rimegepant",
+    "imitrex": "sumatriptan",
+    "maxalt": "rizatriptan",
+    "relpax": "eletriptan",
+    "amerge": "naratriptan",
+    "frova": "frovatriptan",
+    "zomig": "zolmitriptan",
+    "axert": "almotriptan",
+    "ubrelvy": "ubrogepant",
+    "zavzpret": "zavegepant",
+    "reyvow": "lasmiditan",
+    "dhe": "dihydroergotamine",
+    "migranal": "dihydroergotamine",
+    "trudhesa": "dihydroergotamine",
+    "cafergot": "ergotamine"
+}
+
 
 def sentiment_score(text):
     return analyzer.polarity_scores(text)['compound']
@@ -92,6 +181,15 @@ def map_to_med_group(keywords):
         return ', '.join(groups)
     return ''
 
+def convert_brand_to_generic(keywords):
+    # Split keywords by comma and strip spaces
+    keywords_list = keywords.split(', ')
+    # Replace brand names with generic names
+    generic_list = [brand_to_generic.get(keyword, keyword) for keyword in keywords_list]
+    # Join the list back into a string
+    return ', '.join(generic_list)
+    
+    
 # Function to classify as preventive or acute medication
 def classify_medication_type(groups):
     if groups:
@@ -102,10 +200,12 @@ def classify_medication_type(groups):
 df['text'] = df['text'].str.lower()  # Convert entire text column to lowercase
 df['sentiment_score'] = df['text'].apply(sentiment_score)
 df['matched_keywords'] = df['text'].apply(find_keywords)
+df['generic_keywords'] = df['matched_keywords'].apply(convert_brand_to_generic)
 df['med_group'] = df['matched_keywords'].apply(map_to_med_group)
-df['prev_acute'] = df['med_group'].apply(classify_medication_type)
+df['prev_acute'] = df['generic_keywords'].apply(classify_medication_type)
 
 df.to_csv('results/migraine_med_sentiments.csv', index=False)
+print("migraine_med_sentiments.csv file saved in results folder!")
 
 def count_keywords(keyword_column):
     """Counts occurrences of each keyword in the keyword column of the DataFrame."""
@@ -120,36 +220,35 @@ def count_keywords(keyword_column):
     return keyword_counts
 
 # Count the keywords using the function
-keyword_counts = count_keywords(df['matched_keywords'])
+keyword_counts = count_keywords(df['generic_keywords'])
 keyword_counts = {key: val for key, val in keyword_counts.items() if val > 0}
-# print(keyword_counts)
-
+print(keyword_counts)
 plt.figure(figsize=(12, 8))
-plt.bar(keyword_counts.keys(), keyword_counts.values(), color='blue')
-plt.xlabel('Medication Keywords', fontsize=12)
-plt.ylabel('Frequency', fontsize=12)
-plt.title('Frequency of Each Medication Keyword in Texts', fontsize=16)
-plt.xticks(rotation=90)  # Rotate x-axis labels for better visibility
+plt.barh(list(keyword_counts.keys()), list(keyword_counts.values()), color='blue')
+plt.ylabel('Medication Keywords', fontsize=12)  # Adjusted to be the y-axis label
+plt.xlabel('Frequency', fontsize=12)  # Adjusted to be the x-axis label
+plt.title('Frequency of Generic Migraine Medication in Texts', fontsize=16)
+plt.yticks(rotation=0)  # Ensures y-axis labels are horizontal (might not be necessary)
 plt.tight_layout()  # Automatically adjust subplot parameters to give specified padding
 plt.grid(True)
 plt.savefig('figures/freq_medication_keywords.png')
 
+
 med_group = count_keywords(df['med_group'])
 # print(med_group)
-
 plt.figure(figsize=(12, 8))
-plt.bar(med_group.keys(), med_group.values(), color='blue')
-plt.xlabel('Medication Groups', fontsize=12)
-plt.ylabel('Frequency', fontsize=12)
+plt.barh(list(med_group.keys()), list(med_group.values()), color='blue')
+plt.ylabel('Medication Groups', fontsize=12)
+plt.xlabel('Frequency', fontsize=12)
 plt.title('Frequency of Each Medication Group in Texts', fontsize=16)
-plt.xticks(rotation=90)  # Rotate x-axis labels for better visibility
+plt.xticks(rotation=0)  # Rotate x-axis labels for better visibility
 plt.tight_layout()  # Automatically adjust subplot parameters to give specified padding
 plt.grid(True)
 plt.savefig('figures/freq_medication_groups.png')
 
+
 group_type = count_keywords(df['prev_acute'])
 # print(group_type)
-
 plt.figure(figsize=(12, 8))
 plt.bar(group_type.keys(), group_type.values(), color='blue')
 plt.xlabel('Medication Medication', fontsize=12)
@@ -167,13 +266,13 @@ def expand_rows(df, column_name):
     return df.drop(column_name, axis=1).join(s)
 
 # Expanding "matched_keywords", "med_group", and "prev_acute"
-df_keywords = expand_rows(df, 'matched_keywords')
+df_keywords = expand_rows(df, 'generic_keywords')
 df_med_groups = expand_rows(df, 'med_group')
 df_prev_acute = expand_rows(df, 'prev_acute')
 
 # Strip extra whitespace
-df_keywords['matched_keywords'] = df_keywords['matched_keywords'].str.strip()
-df_keywords = df_keywords[df_keywords['matched_keywords'] != '']
+df_keywords['generic_keywords'] = df_keywords['generic_keywords'].str.strip()
+df_keywords = df_keywords[df_keywords['generic_keywords'] != '']
 
 df_med_groups['med_group'] = df_med_groups['med_group'].str.strip()
 df_med_groups = df_med_groups[df_med_groups['med_group'] != '']
@@ -182,7 +281,7 @@ df_prev_acute['prev_acute'] = df_prev_acute['prev_acute'].str.strip()
 df_prev_acute = df_prev_acute[df_prev_acute['prev_acute'] != '']
 
 plt.figure(figsize=(18, 14))
-sns.boxplot(y='matched_keywords', x='sentiment_score', data=df_keywords, orient='h', palette='coolwarm')
+sns.boxplot(y='generic_keywords', x='sentiment_score', data=df_keywords, orient='h', palette='coolwarm')
 plt.title('Sentiment Scores Distribution Across Migraine Medication Keywords', fontsize=16)
 plt.xlabel('Sentiment Score', fontsize=14)
 plt.ylabel('Matched Keywords', fontsize=14)
